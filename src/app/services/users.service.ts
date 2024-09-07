@@ -54,5 +54,5 @@ export class UsersService {
         observer.complete();
       }, 3000);
     });
-  }
+  };
 }

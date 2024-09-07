@@ -35,5 +35,5 @@ export class GenresService {
         observer.complete();
       }, 3000)
     })
-  }
+  };
 }
