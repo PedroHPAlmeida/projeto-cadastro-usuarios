@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { State } from '../interfaces/state.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BrazilianStatesService {
-  private readonly states: any = [
+  private readonly states: State[] = [
     { id: 12, description: 'Acre', abbreviation: 'AC' },
     { id: 27, description: 'Alagoas', abbreviation: 'AL' },
     { id: 16, description: 'Amapá', abbreviation: 'AP' },
@@ -35,7 +36,7 @@ export class BrazilianStatesService {
     { id: 17, description: 'Tocantins', abbreviation: 'TO' }
   ];
 
-  getStates(): Observable<any> {
+  getStates(): Observable<State[]> {
     return new Observable((observer) => {
       setTimeout(() => {
         observer.next(this.states);
