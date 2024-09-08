@@ -1,1 +1,5 @@
-<app-users-card-list [users]="users" (onUserSelected)="onUserSelected($event)"/>
+<div style="margin-bottom: 20px;">
+    <app-users-card-list [users]="users" (onUserSelected)="onUserSelected($event)" />
+</div>
+
+<app-user-form [genres]="genres" [states]="states" [user]="userSelected" />

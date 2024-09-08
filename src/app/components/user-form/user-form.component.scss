@@ -1,0 +1,21 @@
+.user-form {
+    height: 100%;
+    padding: 20px;
+
+    &__row {
+        width: 100%;
+        display: flex;
+    }
+
+    &__item {
+        padding: 5px;
+    }
+
+    &__item-50 {
+        width: 50%;
+    }
+
+    &__item-100 {
+        width: 100%;
+    }
+}
