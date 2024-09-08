@@ -1,0 +1,16 @@
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { User } from '../../interfaces/user.interface';
+
+@Component({
+  selector: 'app-users-card-list',
+  templateUrl: './users-card-list.component.html',
+  styleUrl: './users-card-list.component.scss'
+})
+export class UsersCardListComponent {
+  @Input({ required: true }) users: User[] = [];
+  @Output('onUserSelected') onUserSelectedEmmit = new EventEmitter<number>();
+
+  onUserSelected(userIndex: number) {
+    this.onUserSelectedEmmit.emit(userIndex);
+  }
+}

@@ -12,6 +12,9 @@ import { State } from './interfaces/state.interface';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
+  userSelected: User = {} as User;
+  userSelectedIndex: number | undefined;
+
   users: User[] = [];
   genres: Genre[] = [];
   states: State[] = [];
@@ -27,6 +30,14 @@ export class AppComponent implements OnInit {
     this.getGenres();
     this.getStates();
   }
+
+  onUserSelected(userIndex: number) {
+    const userFound = this.users[userIndex];
+    if (userFound) {
+      this.userSelectedIndex = userIndex;
+      this.userSelected = structuredClone(userFound);
+    }
+  };
 
   private getUsers() {
     this._usersService.getUsers().subscribe((users) => {
