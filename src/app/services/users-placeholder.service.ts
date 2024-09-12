@@ -9,7 +9,7 @@ import { UserPlaceholder } from '../interfaces/user-placeholder.interface';
 export class UsersPlaceholderService {
   constructor(private readonly _httpClient: HttpClient) { }
 
-  getUsersPlaceholder(): Observable<UserPlaceholder> {
-    return this._httpClient.get<UserPlaceholder>('https://jsonplaceholder.typicode.com/users');
+  getUsersPlaceholder(): Observable<UserPlaceholder[]> {
+    return this._httpClient.get<UserPlaceholder[]>('https://jsonplaceholder.typicode.com/users');
   }
 }
