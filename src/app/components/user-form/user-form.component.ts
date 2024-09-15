@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Genre } from '../../interfaces/genre.interface';
 import { State } from '../../interfaces/state.interface';
 import { User } from '../../interfaces/user.interface';
