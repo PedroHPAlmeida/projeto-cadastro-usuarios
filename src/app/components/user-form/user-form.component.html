@@ -49,6 +49,28 @@
                         <mat-error *ngIf="emailInput.hasError('invalidEmail') && !emailInput.hasError('required')">Este e-mail já está sendo utilizado</mat-error>
                 </mat-form-field>
             </div>
+            <div class="user-form__row">
+                <mat-form-field class="user-form__item user-form__item-50">
+                    <mat-label>Senha</mat-label>
+                    <input
+                        #passwordInput="ngModel"    
+                        type="password"
+                        name="password"
+                        matInput
+                        [(ngModel)]="user.password"
+                        (ngModelChange)="onPasswordChange($event)"
+                        appPasswordStrengthValidator
+                        required
+                    >
+                    <mat-error *ngIf="passwordInput.hasError('required')">A senha é obrigatória</mat-error>
+                    <mat-error *ngIf="passwordInput.hasError('invalidPasswordStrength') && !passwordInput.hasError('required')">Digite uma senha mais forte</mat-error>
+                    <mat-progress-bar [value]="passwordStrength" [ngClass]="{
+                        'weak-password': passwordStrength <= 30,
+                        'medium-password': passwordStrength === 60,
+                        'strong-password': passwordStrength === 100,
+                    }"></mat-progress-bar>
+                </mat-form-field>
+            </div>
         </form>
     </mat-card-content>
 </mat-card>
