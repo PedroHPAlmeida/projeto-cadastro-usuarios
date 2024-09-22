@@ -63,17 +63,8 @@
             <div class="user-form__row">
                 <mat-form-field class="user-form__item user-form__item-50">
                     <mat-label>Data de Nascimento</mat-label>
-                    <input
-                        matInput
-                        [matDatepicker]="picker"
-                        [min]="minDate"
-                        [max]="maxDate"
-                        name="dateOfBirth"
-                        [ngModel]="dateValue"
-                        (dateChange)="onDateChange($event)"
-                        readonly
-                        required
-                    >
+                    <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" name="dateOfBirth"
+                        [ngModel]="dateValue" (dateChange)="onDateChange($event)" readonly required>
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker>
                         <mat-datepicker-actions>
@@ -83,6 +74,16 @@
                     </mat-datepicker>
                     <mat-hint>dd/mm/aaaa</mat-hint>
                     <mat-error>A data de nascimento é obrigatório</mat-error>
+                </mat-form-field>
+                <mat-form-field class="user-form__item user-form__item-50">
+                    <mat-label>Estado</mat-label>
+                    <mat-select name="state" [(ngModel)]="user.state" required>
+                        <mat-option>-</mat-option>
+                        <mat-option *ngFor="let state of states" [value]="state.id">
+                            {{ state.description }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>O estado é obrigatório</mat-error>
                 </mat-form-field>
             </div>
         </form>
