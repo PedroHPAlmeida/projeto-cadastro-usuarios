@@ -4,67 +4,44 @@
             <div class="user-form__row">
                 <mat-form-field class="user-form__item user-form__item-100">
                     <mat-label>Nome</mat-label>
-                    <input
-                        type="text"
-                        name="name"
-                        [(ngModel)]="user.name"
-                        matInput
-                        required
-                    >
+                    <input type="text" name="name" [(ngModel)]="user.name" matInput required>
                     <mat-error>O nome é obrigatório</mat-error>
                 </mat-form-field>
             </div>
             <div class="user-form__row">
                 <mat-form-field class="user-form__item user-form__item-50">
                     <mat-label>Usuário</mat-label>
-                    <input
-                        #usernameInput="ngModel"
-                        type="text"
-                        name="username"
-                        [(ngModel)]="user.username"
-                        [ngModelOptions]="{ updateOn: 'blur' }"
-                        matInput
-                        [appCredentialsValidator]="'username'"
-                        required
-                    >
+                    <input #usernameInput="ngModel" type="text" name="username" [(ngModel)]="user.username"
+                        [ngModelOptions]="{ updateOn: 'blur' }" matInput [appCredentialsValidator]="'username'"
+                        required>
                     <mat-hint>O usuário será utilizado para o login</mat-hint>
                     <mat-error *ngIf="usernameInput.hasError('required')">O usuário é obrigatório</mat-error>
-                    <mat-error *ngIf="usernameInput.hasError('invalidUsername') && !usernameInput.hasError('required')">Este usuário já está sendo utilizado</mat-error>
+                    <mat-error
+                        *ngIf="usernameInput.hasError('invalidUsername') && !usernameInput.hasError('required')">Este
+                        usuário já está sendo utilizado</mat-error>
                 </mat-form-field>
                 <mat-form-field class="user-form__item user-form__item-50">
                     <mat-label>E-mail</mat-label>
-                    <input
-                        #emailInput="ngModel"
-                        type="email"
-                        name="email"
-                        [(ngModel)]="user.email"
-                        [ngModelOptions]="{ updateOn: 'blur' }"
-                        matInput
-                        [appCredentialsValidator]="'email'"
-                        required
-                        appEmailPatternValidator
-                        >
-                        <mat-error *ngIf="emailInput.hasError('required')">O e-mail é obrigatório</mat-error>
-                        <mat-error *ngIf="emailInput.hasError('invalidEmailPattern') && !emailInput.hasError('required')">O e-mail é inválido</mat-error>
-                        <mat-error *ngIf="emailInput.hasError('invalidEmail') && !emailInput.hasError('required')">Este e-mail já está sendo utilizado</mat-error>
+                    <input #emailInput="ngModel" type="email" name="email" [(ngModel)]="user.email"
+                        [ngModelOptions]="{ updateOn: 'blur' }" matInput [appCredentialsValidator]="'email'" required
+                        appEmailPatternValidator>
+                    <mat-error *ngIf="emailInput.hasError('required')">O e-mail é obrigatório</mat-error>
+                    <mat-error *ngIf="emailInput.hasError('invalidEmailPattern') && !emailInput.hasError('required')">O
+                        e-mail é inválido</mat-error>
+                    <mat-error *ngIf="emailInput.hasError('invalidEmail') && !emailInput.hasError('required')">Este
+                        e-mail já está sendo utilizado</mat-error>
                 </mat-form-field>
             </div>
             <div class="user-form__row">
                 <mat-form-field class="user-form__item user-form__item-50">
                     <mat-label>Senha</mat-label>
-                    <input
-                        #passwordInput="ngModel"
-                        autocomplete="one-time-code"
-                        type="password"
-                        name="password"
-                        matInput
-                        [(ngModel)]="user.password"
-                        (ngModelChange)="onPasswordChange($event)"
-                        appPasswordStrengthValidator
-                        required
-                    >
+                    <input #passwordInput="ngModel" autocomplete="one-time-code" type="password" name="password"
+                        matInput [(ngModel)]="user.password" (ngModelChange)="onPasswordChange($event)"
+                        appPasswordStrengthValidator required>
                     <mat-error *ngIf="passwordInput.hasError('required')">A senha é obrigatória</mat-error>
-                    <mat-error *ngIf="passwordInput.hasError('invalidPasswordStrength') && !passwordInput.hasError('required')">Digite uma senha mais forte</mat-error>
+                    <mat-error
+                        *ngIf="passwordInput.hasError('invalidPasswordStrength') && !passwordInput.hasError('required')">Digite
+                        uma senha mais forte</mat-error>
                     <mat-progress-bar [value]="passwordStrength" [ngClass]="{
                         'weak-password': passwordStrength <= 30,
                         'medium-password': passwordStrength === 60,
@@ -73,19 +50,39 @@
                 </mat-form-field>
                 <mat-form-field class="user-form__item user-form__item-50">
                     <mat-label>Confirmação de senha</mat-label>
-                    <input
-                        #passwordConfirmationInput="ngModel"
-                        autocomplete="one-time-code"
-                        type="text"
-                        name="passwordConfirmation"
-                        matInput
-                        ngModel
-                        required
-                    />
-                    <mat-error *ngIf="passwordConfirmationInput.hasError('required')">A confirmação de senha é obrigatória</mat-error>
-                    <mat-error *ngIf="passwordConfirmationInput.hasError('invalidPasswordConfirmation') && !passwordConfirmationInput.hasError('required')">
+                    <input #passwordConfirmationInput="ngModel" autocomplete="one-time-code" type="text"
+                        name="passwordConfirmation" matInput ngModel required />
+                    <mat-error *ngIf="passwordConfirmationInput.hasError('required')">A confirmação de senha é
+                        obrigatória</mat-error>
+                    <mat-error
+                        *ngIf="passwordConfirmationInput.hasError('invalidPasswordConfirmation') && !passwordConfirmationInput.hasError('required')">
                         As senhas não estão iguais
                     </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="user-form__row">
+                <mat-form-field class="user-form__item user-form__item-50">
+                    <mat-label>Data de Nascimento</mat-label>
+                    <input
+                        matInput
+                        [matDatepicker]="picker"
+                        [min]="minDate"
+                        [max]="maxDate"
+                        name="dateOfBirth"
+                        [ngModel]="dateValue"
+                        (dateChange)="onDateChange($event)"
+                        readonly
+                        required
+                    >
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker>
+                        <mat-datepicker-actions>
+                            <button mat-button matDatepickerCancel>Cancelar</button>
+                            <button mat-raised-button color="primary" matDatepickerApply>Confirmar</button>
+                        </mat-datepicker-actions>
+                    </mat-datepicker>
+                    <mat-hint>dd/mm/aaaa</mat-hint>
+                    <mat-error>A data de nascimento é obrigatório</mat-error>
                 </mat-form-field>
             </div>
         </form>
