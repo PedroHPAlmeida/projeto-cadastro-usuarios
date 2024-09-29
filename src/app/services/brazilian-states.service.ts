@@ -44,4 +44,9 @@ export class BrazilianStatesService {
       }, 3000)
     })
   };
+
+  getStateDescription(id: number): string {
+    const state = this.states.find(state => state.id === id);
+    return state ? state.description : '';
+  }
 }

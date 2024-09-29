@@ -5,6 +5,8 @@ import { BrazilianStatesService } from './services/brazilian-states.service';
 import { User } from './interfaces/user.interface';
 import { Genre } from './interfaces/genre.interface';
 import { State } from './interfaces/state.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { UserBeforeAndAfterDialogComponent } from './components/user-before-and-after-dialog/user-before-and-after-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +25,7 @@ export class AppComponent implements OnInit {
     private readonly _usersService: UsersService,
     private readonly _genresService: GenresService,
     private readonly _brazilianStatesService: BrazilianStatesService,
+    private readonly _matDialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -38,6 +41,36 @@ export class AppComponent implements OnInit {
       this.userSelected = structuredClone(userFound);
     }
   };
+
+  onFormSubmit() {
+    if (this.userSelectedIndex === undefined) return;
+
+    const originalUser = this.users[this.userSelectedIndex];
+    this.openBeforeAndAfterDialog(originalUser, this.userSelected, this.userSelectedIndex);
+  }
+
+  private openBeforeAndAfterDialog(originalUser: User, updatedUser: User, userSelectedIndex: number) {
+    const dialogRef = this._matDialog.open(UserBeforeAndAfterDialogComponent, {
+      data: {
+        originalUser: originalUser,
+        updatedUser: updatedUser,
+      },
+      minWidth: '70%',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.confirmUserUpdate(updatedUser, userSelectedIndex);
+      }
+    });
+  }
+
+  private confirmUserUpdate(updatedUser: User, userSelectedIndex: number) {
+    this.users[userSelectedIndex] = structuredClone(updatedUser);
+    console.group('Alteração finalizada - Lista de usuários atualizada:');
+    console.log('Lista de usuários atual:', this.users);
+    console.groupEnd();
+  }
 
   private getUsers() {
     this._usersService.getUsers().subscribe((users) => {

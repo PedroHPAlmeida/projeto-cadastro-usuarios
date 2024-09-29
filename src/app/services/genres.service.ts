@@ -37,4 +37,8 @@ export class GenresService {
       }, 3000)
     })
   };
+
+  getGenreDescription(id: number): string {
+    return this.genres.find(genre => genre.id === id)?.description || '';
+  }
 }

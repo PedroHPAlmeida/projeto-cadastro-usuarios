@@ -49,7 +49,6 @@ export class UserFormComponent implements OnChanges, OnInit {
   onDateChange(event: MatDatepickerInputEvent<any, any>) {
     if (!event.value) return;
     this.user.birthDate = convertDateObjToPtBrDate(event.value);
-    console.log(this.user.birthDate);
   }
 
   filterGenres(text: string) {

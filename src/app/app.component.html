@@ -2,4 +2,4 @@
     <app-users-card-list [users]="users" (onUserSelected)="onUserSelected($event)" />
 </div>
 
-<app-user-form [genres]="genres" [states]="states" [user]="userSelected" />
+<app-user-form [genres]="genres" [states]="states" [user]="userSelected" (onFormSubmit)="onFormSubmit()"/>
