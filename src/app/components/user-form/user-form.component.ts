@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Genre } from '../../interfaces/genre.interface';
 import { State } from '../../interfaces/state.interface';
 import { User } from '../../interfaces/user.interface';
@@ -6,6 +6,7 @@ import calcPasswordStrength from '../../utils/calc-password-strength';
 import convertPtBrDateToDateObj from '../../utils/convert-pt-br-date-to-date-obj';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import convertDateObjToPtBrDate from '../../utils/convert-date-obj-to-pt-br-date';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-user-form',
@@ -24,6 +25,10 @@ export class UserFormComponent implements OnChanges, OnInit {
   @Input() genres: Genre[] = [];
   @Input() states: State[] = [];
   @Input() user: User = {} as User;
+
+  @Output('onFormSubmit') onFormSubmitEmitt = new EventEmitter<void>();
+
+  constructor(private readonly el: ElementRef) { }
 
   ngOnInit() {
     this.setMinAndMaxDate();
@@ -61,6 +66,24 @@ export class UserFormComponent implements OnChanges, OnInit {
 
   isAnyCheckboxChecked(): boolean {
     return this.user.musics.some(music => music.isFavorite);
+  }
+
+  onFormSubmit(form: NgForm) {
+    if (form.invalid) {
+      this.focusOnInvalidControl(form);
+      return;
+    }
+    this.onFormSubmitEmitt.emit();
+  }
+
+  private focusOnInvalidControl(form: NgForm) {
+    for (let control of Object.keys(form.controls)) {
+      if (form.controls[control].invalid) {
+        const invalidControl: HTMLElement = this.el.nativeElement.querySelector(`[name=${control}]`);
+        invalidControl.focus();
+        break;
+      }
+    }
   }
 
   private setBirthDateToDatepicker(birthDate: string) {
